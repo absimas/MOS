@@ -29,6 +29,12 @@ public class Root extends Process {
     final ReadInput readInput = new ReadInput(this);
     final WriteInput writeInput = new WriteInput(this);
 
+    // Create system resource elements
+    Resource.INTERNAL_MEMORY.create(this);
+    Resource.CHANNEL_1.create(this);
+    Resource.CHANNEL_2.create(this);
+    Resource.CHANNEL_3.create(this);
+
     // Wait for MOS_END resource
     Resource.MOS_END.request(this);
 
