@@ -40,7 +40,7 @@ public abstract class Process implements Runnable {
   /**
    * Process that created this process.
    */
-  private final Process parent;
+  protected final Process parent;
   /**
    * Internal name.
    */
