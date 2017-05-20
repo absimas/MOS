@@ -23,9 +23,10 @@ public class Resource<T extends Element> {
   public static final Resource<StringElement> CHANNEL_3 = new Resource<>(StringElement.class);
   public static final Resource<StringElement> CHANNEL_2 = new Resource<>(StringElement.class);
   public static final Resource<StringElement> CHANNEL_1 = new Resource<>(StringElement.class);
-  public static final Resource<StringElement> INPUT_PACKET = new Resource<>(StringElement.class);
-  public static final Resource<StringElement> OUTPUT_PACKET = new Resource<>(StringElement.class);
-  public static final Resource<StringElement> DISK_WRITE_PACKET = new Resource<>(StringElement.class);
+  public static final Resource<IOPacket> INPUT_PACKET = new Resource<>(IOPacket.class);
+  public static final Resource<IOPacket> OUTPUT_PACKET = new Resource<>(IOPacket.class);
+  public static final Resource<DiskPacket> DISK_READ_PACKET = new Resource<>(DiskPacket.class);
+  public static final Resource<DiskPacket> DISK_WRITE_PACKET = new Resource<>(DiskPacket.class);
   public static final Resource<StringElement> INTERRUPT = new Resource<>(StringElement.class);
   public static final Resource<StringElement> INTERNAL_MEMORY = new Resource<>(StringElement.class);
   public static final Resource<StringElement> CPU = new Resource<>(StringElement.class);
