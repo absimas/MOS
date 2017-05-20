@@ -8,8 +8,10 @@ import com.sun.istack.internal.Nullable;
  */
 public class JobGovernor extends Process {
 
-  JobGovernor(Process parent, int priority, @Nullable Element... resources) {
-    super(parent, priority, resources);
+  static final int PRIORITY = VirtualMachine.PRIORITY + 1;
+
+  JobGovernor(Process parent, @Nullable Element... resources) {
+    super(parent, PRIORITY, resources);
   }
 
   @Override

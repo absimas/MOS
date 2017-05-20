@@ -8,8 +8,10 @@ import com.sun.istack.internal.Nullable;
  */
 public class WriteInput extends Process {
 
-  WriteInput(Process parent, int priority, @Nullable Element... resources) {
-    super(parent, priority, resources);
+  static final int PRIORITY = 10;
+
+  WriteInput(Process parent, @Nullable Element... resources) {
+    super(parent, PRIORITY, resources);
   }
 
   @Override

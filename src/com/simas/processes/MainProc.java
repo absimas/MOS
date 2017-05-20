@@ -8,8 +8,10 @@ import com.sun.istack.internal.Nullable;
  */
 public class MainProc extends Process {
 
-  MainProc(Process parent, int priority, @Nullable Element... resources) {
-    super(parent, priority, resources);
+  static final int PRIORITY = 10;
+
+  MainProc(Process parent, @Nullable Element... resources) {
+    super(parent, PRIORITY, resources);
   }
 
   @Override

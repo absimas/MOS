@@ -8,8 +8,10 @@ import com.simas.resources.Resource;
  */
 public class Root extends Process {
 
-  public Root(int priority) {
-    super(null, priority);
+  static final int PRIORITY = 100;
+
+  public Root() {
+    super(null, PRIORITY);
 
     // Prevent multiple roots
     if (PROCESSES.stream().anyMatch(process -> process instanceof Root)) {
@@ -20,12 +22,12 @@ public class Root extends Process {
   @Override
   public void run() {
     // Create system processes
-    final CLI cli = new CLI(this, 10);
-    final MainProc mainProc = new MainProc(this, 10);
-    final ReadDisk readDisk = new ReadDisk(this, 10);
-    final WriteDisk writeDisk = new WriteDisk(this, 10);
-    final ReadInput readInput = new ReadInput(this, 10);
-    final WriteInput writeInput = new WriteInput(this, 10);
+    final CLI cli = new CLI(this);
+    final MainProc mainProc = new MainProc(this);
+    final ReadDisk readDisk = new ReadDisk(this);
+    final WriteDisk writeDisk = new WriteDisk(this);
+    final ReadInput readInput = new ReadInput(this);
+    final WriteInput writeInput = new WriteInput(this);
 
     // Wait for MOS_END resource
     Resource.MOS_END.request(this);
