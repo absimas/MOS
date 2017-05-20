@@ -4,14 +4,11 @@ import com.simas.Log;
 import com.simas.Utils;
 import com.simas.processes.Process;
 import com.sun.istack.internal.NotNull;
-
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 /**
  * Main resource class. This wraps multiple {@link Element}s of a specific resource.
@@ -20,6 +17,7 @@ import java.util.stream.Stream;
 public class Resource<T extends Element> {
 
   public static final Resource<StringElement> PROGRAM_IN_MEMORY = new Resource<>(StringElement.class);
+  public static final Resource<Element> MOS_END = new Resource<>(Element.class);
   public static final Resource<StringElement> CHANNEL_3 = new Resource<>(StringElement.class);
   public static final Resource<StringElement> CHANNEL_2 = new Resource<>(StringElement.class);
   public static final Resource<StringElement> CHANNEL_1 = new Resource<>(StringElement.class);
@@ -82,7 +80,7 @@ public class Resource<T extends Element> {
    * @return any element of this resource
    */
   @NotNull
-  public synchronized T request(Process requester) throws InterruptedException {
+  public synchronized T request(Process requester) {
     return request(requester, t -> true);
   }
 
@@ -92,7 +90,7 @@ public class Resource<T extends Element> {
    * @return element that matches the given predicate
    */
   @NotNull
-  public synchronized T request(Process requester, Predicate<? super T> predicate) throws InterruptedException {
+  public synchronized T request(Process requester, Predicate<? super T> predicate) {
     // Fetch first element that matches the given predicate
     Optional<T> optional = elements.stream()
         .filter(predicate)
@@ -110,7 +108,11 @@ public class Resource<T extends Element> {
       while (!optional.isPresent()) {
         Log.v("%s asked for an element of %s but it wasn't found.", requester, toString());
         // Wait for a resource notification
-        wait();
+        try {
+          wait();
+        } catch (InterruptedException e) {
+          throw new RuntimeException(e);
+        }
 
         // Search again
         optional = elements.stream()
