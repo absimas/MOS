@@ -27,7 +27,7 @@ public class Resource<T extends Element> {
   public static final Resource<IOPacket> OUTPUT_PACKET = new Resource<>(IOPacket.class);
   public static final Resource<DiskPacket> DISK_READ_PACKET = new Resource<>(DiskPacket.class);
   public static final Resource<DiskPacket> DISK_WRITE_PACKET = new Resource<>(DiskPacket.class);
-  public static final Resource<StringElement> INTERRUPT = new Resource<>(StringElement.class);
+  public static final Resource<Interrupt> INTERRUPT = new Resource<>(Interrupt.class);
   public static final Resource<StringElement> INTERNAL_MEMORY = new Resource<>(StringElement.class);
   public static final Resource<StringElement> CPU = new Resource<>(StringElement.class);
   public static final Resource<Element> NON_EXISTENT = new Resource<>(Element.class);

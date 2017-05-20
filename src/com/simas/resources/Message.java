@@ -5,7 +5,7 @@ import com.simas.processes.Process;
 /**
  * Message element with a specific process that will act as a destination.
  */
-public class Message extends Element<Message, Resource<Message>> {
+public class Message<T extends Message> extends Element<T, Resource<T>> {
 
   public Process destination;
   public String message;
@@ -13,7 +13,7 @@ public class Message extends Element<Message, Resource<Message>> {
   /**
    * Required constructor.
    */
-  Message(Resource<Message> resource, Process creator) {
+  Message(Resource<T> resource, Process creator) {
     super(resource, creator);
   }
 
