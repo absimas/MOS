@@ -4,6 +4,8 @@ import com.simas.Log;
 import com.simas.Utils;
 import com.simas.processes.Process;
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +58,21 @@ public class Resource<T extends Element> {
 
   /**
    * Creates and adds a new element to this resource.
+   */
+  public synchronized void create(Process creator) {
+    create(creator, null);
+  }
+
+  /**
+   * Creates and adds a new element to this resource.
    * Before it is added, the given {@link Element.Modifier} will be called to modify the created element.
    */
-  public synchronized void create(Process creator, Element.Modifier<T> modifier) {
+  public synchronized void create(Process creator, @Nullable Element.Modifier<T> modifier) {
     // Instantiate
     final T element = Element.instantiate(elementType, this, creator);
 
     // Modify the element
-    modifier.modify(element);
+    if (modifier != null) modifier.modify(element);
 
     // Add to process created resource list
     creator.createdResources.add(element);
