@@ -12,8 +12,8 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class Element<T extends Element, R extends Resource<T>> {
 
-  protected final R resource;
-  protected final Process creator;
+  public final R resource;
+  public final Process creator;
 
   /**
    * Required constructor.
