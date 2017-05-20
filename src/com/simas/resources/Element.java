@@ -10,7 +10,7 @@ import java.lang.reflect.InvocationTargetException;
  * @see Message
  * @see StringElement
  */
-public abstract class Element<T extends Element, R extends Resource<T>> {
+public class Element<T extends Element, R extends Resource<T>> {
 
   protected final R resource;
   protected final Process creator;
@@ -45,7 +45,9 @@ public abstract class Element<T extends Element, R extends Resource<T>> {
   }
 
   @Override
-  public abstract String toString();
+  public String toString() {
+    return String.format("Basic element of %s created by %s.", resource, creator);
+  }
 
   public static <T extends Element> T instantiate(Class<T> type, Resource<T> resource, Process creator) {
     try {
