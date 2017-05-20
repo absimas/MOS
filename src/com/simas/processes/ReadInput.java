@@ -1,6 +1,9 @@
 package com.simas.processes;
 
 import com.simas.resources.Element;
+import com.simas.resources.IOPacket;
+import com.simas.resources.Resource;
+import com.simas.resources.StringElement;
 import com.sun.istack.internal.Nullable;
 
 /**
@@ -16,7 +19,22 @@ public class ReadInput extends Process {
 
   @Override
   public void run() {
+    // Wait for input packet resource
+    final IOPacket packet = Resource.INPUT_PACKET.request(this);
 
+    // Wait for 1st channel resource // ToDo element type?
+    final StringElement channel1 = Resource.CHANNEL_1.request(this);
+
+    // ToDo read from channel1
+
+    // Free 1st channel
+    channel1.free();
+
+    // Send message to packet creator
+    Resource.MESSAGE.create(this, element -> {
+      element.destination = packet.creator;
+      element.message = "Reading input done";
+    });
   }
 
 }
