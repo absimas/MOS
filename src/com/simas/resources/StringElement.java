@@ -16,4 +16,9 @@ public class StringElement extends Element<StringElement, Resource<StringElement
     super(resource, creator);
   }
 
+  @Override
+  public String toString() {
+    return String.format("%s with string %s from resource %s", getClass().getName(), string, resource);
+  }
+
 }

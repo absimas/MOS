@@ -44,6 +44,9 @@ public abstract class Element<T extends Element, R extends Resource<T>> {
     resource.elements.remove(this);
   }
 
+  @Override
+  public abstract String toString();
+
   public static <T extends Element> T instantiate(Class<T> type, Resource<T> resource, Process creator) {
     try {
       return type.getConstructor(Resource.class, Process.class).newInstance(resource, creator);

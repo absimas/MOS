@@ -18,6 +18,11 @@ public class Message extends Element<Message, Resource<Message>> {
   }
 
   @Override
+  public String toString() {
+    return String.format("Message '%s' from %s to %s", message, creator, destination);
+  }
+
+  @Override
   public void free() {
     // Messages are consumed after each request
   }
