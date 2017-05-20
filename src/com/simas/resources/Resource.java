@@ -1,12 +1,17 @@
 package com.simas.resources;
 
 import com.simas.Log;
+import com.simas.Utils;
 import com.simas.processes.Process;
 import com.sun.istack.internal.NotNull;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Main resource class. This wraps multiple {@link Element}s of a specific resource.
@@ -121,6 +126,18 @@ public class Resource<T extends Element> {
     }
 
     return optional.get();
+  }
+
+  @Override
+  public String toString() {
+    try {
+      for (Field field : Utils.getStaticFields(Resource.class)) {
+        if (field.get(null) != this) continue;
+        return String.format("Resource %s", field.getName());
+      }
+    } catch (IllegalAccessException ignored) {}
+
+    throw new IllegalStateException(String.format("Resource %s wasn't found!", getClass().getName()));
   }
 
 }
