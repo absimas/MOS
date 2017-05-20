@@ -63,4 +63,14 @@ public class Element<T extends Element, R extends Resource<T>> {
     void modify(T element);
   }
 
+  /**
+   * Validate this element after creation.
+   * @throws IllegalStateException if the element is invalid
+   */
+  protected void validate() throws IllegalStateException {
+    if (resource == null || creator == null) {
+      throw new IllegalStateException("Wrapping resource and creator must be set for a resource element!");
+    }
+  }
+
 }

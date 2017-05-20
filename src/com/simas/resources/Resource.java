@@ -75,6 +75,9 @@ public class Resource<T extends Element> {
     // Modify the element
     if (modifier != null) modifier.modify(element);
 
+    // Validate the element
+    element.validate();
+
     // Add to process created resource list
     creator.createdResources.add(element);
 
