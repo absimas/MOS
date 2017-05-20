@@ -30,7 +30,7 @@ public class Resource<T extends Element> {
   public static final Resource<StringElement> INTERRUPT = new Resource<>(StringElement.class);
   public static final Resource<StringElement> INTERNAL_MEMORY = new Resource<>(StringElement.class);
   public static final Resource<StringElement> CPU = new Resource<>(StringElement.class);
-  public static final Resource<StringElement> NON_EXISTENT = new Resource<>(StringElement.class);
+  public static final Resource<Element> NON_EXISTENT = new Resource<>(Element.class);
   public static final Resource<Element> NO_TASK = new Resource<>(Element.class);
   public static final Resource<Message> MESSAGE = new Resource<>(Message.class);
 
