@@ -67,6 +67,9 @@ public abstract class VirtualMachine extends Process {
     }
 
     Scheduler.schedule();
+
+    // Repeat
+    run();
   }
 
   /**

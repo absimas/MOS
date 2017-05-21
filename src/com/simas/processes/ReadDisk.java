@@ -49,12 +49,14 @@ public class ReadDisk extends Process {
     // Free internal memory resource
     resource.free();
 
-
     // Send message to packet creator
     Resource.MESSAGE.create(this, element -> {
       element.destination = packet.creator;
       element.message = string;
     });
+
+    // Repeat
+    run();
   }
 
 }

@@ -2,7 +2,6 @@ package com.simas.processes;
 
 import com.simas.Log;
 import com.simas.real_machine.Channel1;
-import com.simas.real_machine.Channel3;
 import com.simas.real_machine.Memory;
 import com.simas.resources.Element;
 import com.simas.resources.IOPacket;
@@ -46,12 +45,14 @@ public class ReadInput extends Process {
     // Free internal memory resource
     resource.free();
 
-
     // Send message to packet creator
     Resource.MESSAGE.create(this, element -> {
       element.destination = packet.creator;
       element.message = input;
     });
+
+    // Repeat
+    run();
   }
 
 }

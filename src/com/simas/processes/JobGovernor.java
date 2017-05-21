@@ -1,6 +1,7 @@
 package com.simas.processes;
 
 import com.simas.Log;
+import com.simas.Scheduler;
 import com.simas.real_machine.Channel3;
 import com.simas.resources.Element;
 import com.simas.resources.Interrupt;
@@ -100,7 +101,7 @@ public class JobGovernor extends Process {
         Channel3.getInstance().setPointer(position);
         break;
       case TI:
-        // ToDo call scheduler
+        Scheduler.schedule();
         break;
       case GD:
         // Create input packet
@@ -146,7 +147,7 @@ public class JobGovernor extends Process {
         throw new IllegalStateException(String.format("Unexpected interrupt type %s!", interrupt.type));
     }
 
-    // Active VM
+    // Activate VM
     virtualMachine.resume();
 
     // Repeat // Waits for another interrupt resource

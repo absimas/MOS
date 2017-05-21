@@ -53,6 +53,9 @@ public class WriteDisk extends Process {
       element.destination = packet.creator;
       element.message = string;
     });
+
+    // Repeat
+    run();
   }
 
 }

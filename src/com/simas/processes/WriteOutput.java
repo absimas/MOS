@@ -50,6 +50,9 @@ public class WriteOutput extends Process {
       element.destination = packet.creator;
       element.message = "Writing output done";
     });
+
+    // Repeat
+    run();
   }
 
 }
