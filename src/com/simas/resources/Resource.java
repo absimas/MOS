@@ -143,6 +143,9 @@ public class Resource<T extends Element> {
             .findFirst();
       }
 
+      // Remove element from list before waiting for the CPU
+      elements.remove(optional.get());
+
       // An element is now available, remove process from waiters list
       waitingProcesses.remove(requester);
 
@@ -154,6 +157,9 @@ public class Resource<T extends Element> {
       // Now we need the CPU again
       requester.requestCPU();
     }
+
+    // Remove element from list (in case we received it immediately)
+    elements.remove(optional.get());
 
     return optional.get();
   }
