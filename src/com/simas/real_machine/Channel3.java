@@ -5,7 +5,10 @@ package com.simas.real_machine;
  */
 public class Channel3 extends Storage<Channel3> {
 
-  private static final int SIZE = 10000;
+  /**
+   * Memory size: 10000 words.
+   */
+  private static final int SIZE = 10000 * RealMachine.WORD_SIZE;
   private static final Channel3 INSTANCE = new Channel3();
 
   /**

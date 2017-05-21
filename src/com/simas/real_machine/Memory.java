@@ -6,7 +6,10 @@ package com.simas.real_machine;
 public class Memory extends Storage {
 
   private static final Memory INSTANCE = new Memory();
-  private static final int SIZE = 1000;
+  /**
+   * Memory size: 1000 words.
+   */
+  private static final int SIZE = 1000 * RealMachine.WORD_SIZE;
 
   /**
    * Private c-tor to prevent other instances than {@link #INSTANCE}.
