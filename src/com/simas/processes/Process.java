@@ -10,9 +10,9 @@ import com.sun.istack.internal.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 /**
  * Base process class.
@@ -126,7 +126,7 @@ public abstract class Process implements Runnable {
   }
 
   @Override
-  public void run() {
+  public void  run() {
     // Everyone needs the CPU
     Resource.CPU.request(this, message -> message.destination == this);
   }
@@ -156,6 +156,7 @@ public abstract class Process implements Runnable {
     // Remove from global process list
     PROCESSES.remove(this);
 
+    // ToDo running process destroyed => change its state?
     if (state == State.RUNNING) {
       // ToDo call scheduler
     }
@@ -185,6 +186,28 @@ public abstract class Process implements Runnable {
     } else {
       throw new IllegalStateException(String.format("Tried to resume process %s that's in %s state.", toString(), state));
     }
+  }
+
+  /**
+   * Process drops the CPU resource. If found, Will also call {@link Element#destroy()}.
+   * Thus it will be removed from {@link #availableResources} and {@link #createdResources}.
+   */
+  @SuppressWarnings("WhileLoopReplaceableByForEach")
+  public void dropCPU() {
+    final Iterator<Element> iterator = availableResources.iterator();
+    while (iterator.hasNext()) {
+      Element element = iterator.next();
+      if (element.resource != Resource.CPU) continue;
+      element.destroy();
+    }
+  }
+
+  /**
+   * Places a CPU request for this process.
+   * This call will block until CPU is given and {@link Resource#CPU} is notified.
+   */
+  public void requestCPU() {
+    Resource.CPU.request(this, message -> message.destination == this);
   }
 
   @NotNull
