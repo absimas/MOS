@@ -26,7 +26,7 @@ public class ReadDisk extends Process {
     final DiskPacket packet = Resource.DISK_READ_PACKET.request(this);
 
     // Wait for 3rd channel resource
-    final Element resource = Resource.CHANNEL_3.request(this);
+    Element resource = Resource.CHANNEL_3.request(this);
 
     // Read from 3rd channel
     final Channel3 channel3 = Channel3.getInstance();
@@ -35,11 +35,18 @@ public class ReadDisk extends Process {
     final int position = packet.externalPosition - pointer;
     final String string = channel3.read(position, packet.size);
 
+    // Free 3rd channel
+    resource.free();
+
+    // Wait for internal memory resource
+    resource = Resource.INTERNAL_MEMORY.request(this);
+
     // Write to memory
     Memory.getInstance().write(packet.internalPosition, string);
 
-    // Free 3rd channel
+    // Free internal memory resource
     resource.free();
+
 
     // Send message to packet creator
     Resource.MESSAGE.create(this, element -> {

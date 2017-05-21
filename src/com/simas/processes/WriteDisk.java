@@ -24,11 +24,17 @@ public class WriteDisk extends Process {
     // Wait for disk write resource
     final DiskPacket packet = Resource.DISK_WRITE_PACKET.request(this);
 
-    // Wait for 3rd channel resource
-    final Element resource = Resource.CHANNEL_3.request(this);
+    // Wait for internal memory resource
+    Element resource = Resource.INTERNAL_MEMORY.request(this);
 
     // Read from memory
     final String string = Memory.getInstance().read(packet.internalPosition, packet.size);
+
+    // Free internal memory resource
+    resource.free();
+
+    // Wait for 3rd channel resource
+    resource = Resource.CHANNEL_3.request(this);
 
     // Write to 3rd channel
     final Channel3 channel3 = Channel3.getInstance();

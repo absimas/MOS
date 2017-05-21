@@ -24,18 +24,24 @@ public class WriteOutput extends Process {
     // Wait for output packet resource
     final IOPacket packet = Resource.OUTPUT_PACKET.request(this);
 
-    // Wait for 2nd channel resource
-    final Element channel2 = Resource.CHANNEL_2.request(this);
+    // Wait for internal memory resource
+    Element resource = Resource.INTERNAL_MEMORY.request(this);
 
-    // Read from memory
+    // Read from internal memory
     final String output = Memory.getInstance().read(packet.position, packet.size);
+
+    // Free internal memory resource
+    resource.free();
+
+    // Wait for 2nd channel resource
+    resource = Resource.CHANNEL_2.request(this);
 
     // Write to 2nd channel
     Channel2.write(output);
     Log.v("%s wrote '%s'.", toString(), output);
 
     // Free 2nd channel
-    channel2.free();
+    resource.free();
 
     // Send message to packet creator
     Resource.MESSAGE.create(this, element -> {

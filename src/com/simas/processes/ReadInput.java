@@ -26,17 +26,24 @@ public class ReadInput extends Process {
     final IOPacket packet = Resource.INPUT_PACKET.request(this);
 
     // Wait for 1st channel resource
-    final Element channel1 = Resource.CHANNEL_1.request(this);
+    Element resource = Resource.CHANNEL_1.request(this);
 
     // Read from 1st channel
     final String input = Channel1.read(packet.size);
     Log.v("%s read '%s' when asked for %d.", toString(), input, packet.size);
 
+    // Free 1st channel
+    resource.free();
+
+    // Wait for internal memory resource
+    resource = Resource.INTERNAL_MEMORY.request(this);
+
     // Write to memory
     Memory.getInstance().write(packet.position, input);
 
-    // Free 1st channel
-    channel1.free();
+    // Free internal memory resource
+    resource.free();
+
 
     // Send message to packet creator
     Resource.MESSAGE.create(this, element -> {
