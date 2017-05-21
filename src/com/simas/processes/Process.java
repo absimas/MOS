@@ -87,7 +87,7 @@ public abstract class Process implements Runnable {
    * @param priority  priority of this process
    * @param resources initial resources
    */
-  Process(Process parent, int priority, @Nullable List<Element> resources) {
+  Process(@Nullable Process parent, int priority, @Nullable List<Element> resources) {
     this.parent = parent;
     this.priority = priority;
     this.thread = new Thread(this);
@@ -101,7 +101,7 @@ public abstract class Process implements Runnable {
     PROCESSES.add(this);
 
     // Add as parent's child
-    parent.children.add(this);
+    if (parent != null) parent.children.add(this);
 
     // Start process thread
     thread.start();
