@@ -143,6 +143,8 @@ public class Resource<T extends Element> {
             .findFirst();
       }
 
+      Log.v("%s got %s.", requester, toString());
+
       // Remove element from list before waiting for the CPU
       elements.remove(optional.get());
 
@@ -152,14 +154,16 @@ public class Resource<T extends Element> {
       if (this != CPU) {
         // Unblock the process
         requester.setState(Process.State.READY);
-      }
 
-      // Now we need the CPU again
-      requester.requestCPU();
+        // Now we need the CPU again
+        requester.requestCPU();
+      }
     }
 
     // Remove element from list (in case we received it immediately)
     elements.remove(optional.get());
+
+    Log.v("%s got %s.", requester, toString());
 
     return optional.get();
   }
