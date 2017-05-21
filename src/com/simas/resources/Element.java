@@ -2,9 +2,7 @@ package com.simas.resources;
 
 import com.simas.Log;
 import com.simas.processes.Process;
-
 import java.lang.reflect.InvocationTargetException;
-import java.util.function.Consumer;
 
 /**
  * Resource element is a wrapper on different types of elements.
@@ -31,19 +29,26 @@ public class Element<T extends Element, R extends Resource<T>> {
     // Add to the wrapping resource class's element list
     resource.elements.add((T) this);
 
+    // Remove from owners
+    removeFromAvailable();
+
     // Notify wrapping resource about an available element
     synchronized (resource) {
       resource.notify();
     }
-
-    removeFromAvailable();
   }
 
   /**
    * Remove this element in case it existed in the resource element list.
    */
   public void destroy() {
+    // Remove from resource list
     resource.elements.remove(this);
+
+    // Remove from creator
+    creator.createdResources.remove(this);
+
+    // Remove from owners
     removeFromAvailable();
   }
 
