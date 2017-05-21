@@ -12,9 +12,10 @@ import com.sun.istack.internal.Nullable;
 public class VirtualMachine1 extends VirtualMachine {
 
   public static final String NAME = "VM1";
+  private static final int INTERNAL_MEMORY_POSITION = 10;
 
   VirtualMachine1(Process parent, @Nullable Element... resources) {
-    super(parent, resources);
+    super(parent, INTERNAL_MEMORY_POSITION, resources);
   }
 
   /**

@@ -1,14 +1,10 @@
 package com.simas.processes;
 
+import com.simas.real_machine.Memory;
 import com.simas.resources.Element;
 import com.simas.resources.Interrupt;
-import com.simas.resources.Message;
-import com.simas.resources.ProgramElement;
 import com.simas.resources.Resource;
-import com.simas.resources.StringElement;
 import com.sun.istack.internal.Nullable;
-
-import java.util.function.Predicate;
 
 /**
  * User program executor.
@@ -17,16 +13,27 @@ public abstract class VirtualMachine extends Process {
 
   static final int PRIORITY = 10;
 
-  VirtualMachine(Process parent, @Nullable Element... resources) {
+  /**
+   * {@link Memory} position of this VM.
+   */
+  private final int internalMemoryPosition;
+
+  VirtualMachine(Process parent, int internalMemoryPosition, @Nullable Element... resources) {
     super(parent, PRIORITY, resources);
+    this.internalMemoryPosition = internalMemoryPosition;
   }
 
   @Override
   public void run() {
-    // Wait for internal memory resource // ToDo element type?
-    final StringElement memory = Resource.INTERNAL_MEMORY.request(this);
+    /* ToDo do we need PTR?
+    // Wait for internal memory resource
+    final Element memory = Resource.INTERNAL_MEMORY.request(this);
 
-    // ToDo fill PTR?
+    // Fill PTR
+
+    // Free internal memory resource
+    memory.free();
+    */
 
     // Execute user program
     execute(); // ToDo how to execute step-by-step?
