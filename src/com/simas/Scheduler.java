@@ -5,7 +5,7 @@ import com.simas.processes.Root;
 import com.simas.resources.Resource;
 import com.sun.istack.internal.NotNull;
 import java.util.Comparator;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 /**
  * Created by Simas on 2017 May 21.
@@ -32,21 +32,20 @@ public class Scheduler {
       currentProcess.setState(Process.State.READY);
     }
 
-    final Stream<Process> readyProcesses = Process.PROCESSES.stream()
-        .filter(process -> process.getState() == Process.State.READY);
+    final Optional<Process> optional = Process.PROCESSES.stream()
+        .filter(process -> process.getState() == Process.State.READY)
+        .sorted(Comparator.comparingInt(o -> o.priority))
+        .findFirst();
 
     // No ready processes
-    if (readyProcesses.count() == 0) {
-      Log.e("Special situation! No ready resources available...");
+    if (!optional.isPresent()) {
+      Log.e("Special situation! No ready processes available...");
       System.exit(1);
       return;
     }
 
-    // Fetch first, highest priority process
-    currentProcess = readyProcesses
-        .sorted(Comparator.comparingInt(o -> o.priority))
-        .findFirst()
-        .get(); // Shouldn't be a warning, we've just checked the size
+    // Select the found process
+    currentProcess = optional.get();
 
     // Restore process registers
     currentProcess.restore();
