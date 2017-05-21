@@ -101,6 +101,7 @@ public abstract class VirtualMachine extends Process {
    * @return true when a command was successfully executed, false when it needs elevated privileges
    */
   protected boolean execute(Command command) throws IndexOutOfBoundsException, ArithmeticException, IllegalArgumentException {
+    Log.v("Executing %s", command);
     switch (command.type) {
       case CR:
         RealMachine.TMP = read(command.getArgument());
@@ -255,27 +256,27 @@ public abstract class VirtualMachine extends Process {
 
   /**
    * Read from memory.
-   * @param position relative memory position
+   * @param wordIndex word index within a relative memory block
    * @return word that's been read
    * @throws IndexOutOfBoundsException when reading from an OOB memory position
    */
-  protected final String read(int position) throws IndexOutOfBoundsException {
-    return Memory.getInstance().read(position + internalMemoryPosition, RealMachine.WORD_SIZE);
+  protected final String read(int wordIndex) throws IndexOutOfBoundsException {
+    return Memory.getInstance().read(internalMemoryPosition + wordIndex * RealMachine.WORD_SIZE, RealMachine.WORD_SIZE);
   }
 
 
   /**
    * Write to memory.
-   * @param position relative memory position
-   * @param word     word to be written
+   * @param wordIndex word index within a relative memory block
+   * @param word      word to be written
    * @throws IndexOutOfBoundsException when writing to an OOB memory position
    * @throws IllegalArgumentException when trying to write an incomplete word
    */
-  protected final void write(int position, String word) throws IndexOutOfBoundsException, IllegalArgumentException {
+  protected final void write(int wordIndex, String word) throws IndexOutOfBoundsException, IllegalArgumentException {
     if (word.length() != RealMachine.WORD_SIZE) {
       throw new IllegalArgumentException("Trying to write an incomplete word!");
     }
-    Memory.getInstance().write(position + internalMemoryPosition, word);
+    Memory.getInstance().write(internalMemoryPosition + wordIndex * RealMachine.WORD_SIZE, word);
   }
 
 }
