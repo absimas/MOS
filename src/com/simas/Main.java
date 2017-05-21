@@ -1,13 +1,18 @@
 package com.simas;
 
 import com.simas.processes.Process;
+import com.simas.processes.Root;
 import com.simas.resources.Message;
 import com.simas.resources.Resource;
 
 public class Main {
 
-  public static void main(String[] args) throws InterruptedException {
 
+
+  public static void main(String[] args) throws InterruptedException {
+    final Root root = new Root();
+    Scheduler.currentProcess = root;
+    Scheduler.schedule();
   }
 
   /**
