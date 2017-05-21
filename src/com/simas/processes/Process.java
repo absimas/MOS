@@ -200,14 +200,19 @@ public abstract class Process implements Runnable {
    * Process drops the CPU resource. If found, Will also call {@link Element#destroy()}.
    * Thus it will be removed from {@link #availableResources} and {@link #createdResources}.
    */
-  @SuppressWarnings("WhileLoopReplaceableByForEach")
   public void dropCPU() {
+    // Remove all CPU-related resources
     final Iterator<Element> iterator = availableResources.iterator();
+    final List<Element> expendables = new ArrayList<>();
     while (iterator.hasNext()) {
-      Element element = iterator.next();
+      final Element element = iterator.next();
       if (element.resource != Resource.CPU) continue;
-      element.destroy();
+      expendables.add(element);
+      iterator.remove();
     }
+
+    // Destroy all CPU-related resources
+    expendables.forEach(Element::destroy);
   }
 
   /**
