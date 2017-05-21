@@ -8,9 +8,10 @@ import com.simas.exceptions.TIException;
 public class RealMachine {
 
   public static final int MAX_TI = 10;
+  public static final int WORD_SIZE = 5;
 
   /**
-   * Temporary value of 1 word (5 symbols).
+   * Temporary value of 1 word ({@link #WORD_SIZE}).
    */
   public static String TMP;
   /**
