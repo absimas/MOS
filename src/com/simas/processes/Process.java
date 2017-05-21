@@ -3,6 +3,7 @@ package com.simas.processes;
 import com.simas.real_machine.Comparison;
 import com.simas.real_machine.RealMachine;
 import com.simas.resources.Element;
+import com.simas.resources.Message;
 import com.simas.resources.Resource;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Base process class.
@@ -41,6 +43,10 @@ public abstract class Process implements Runnable {
    */
   public final List<Process> children = new ArrayList<>();
   /**
+   * Process priority.
+   */
+  public final int priority;
+  /**
    * Process that created this process.
    */
   protected final Process parent;
@@ -48,10 +54,6 @@ public abstract class Process implements Runnable {
    * Internal name.
    */
   private final int id = ids++;
-  /**
-   * Process priority.
-   */
-  private final int priority;
   private final Thread thread;
 
   /**
@@ -126,7 +128,7 @@ public abstract class Process implements Runnable {
   @Override
   public void run() {
     // Everyone needs the CPU
-    Resource.CPU.request(this);
+    Resource.CPU.request(this, message -> message.destination == this);
   }
 
   /**
