@@ -40,6 +40,8 @@ public class JobGovernor extends Process {
 
   @Override
   public void run() {
+    super.run();
+
     // Start VM
     final VirtualMachine virtualMachine;
     switch (programResource.program) {

@@ -22,6 +22,8 @@ public class ReadInput extends Process {
 
   @Override
   public void run() {
+    super.run();
+
     // Wait for input packet resource
     final IOPacket packet = Resource.INPUT_PACKET.request(this);
 

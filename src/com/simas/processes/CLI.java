@@ -27,6 +27,8 @@ public class CLI extends Process {
 
   @Override
   public void run() {
+    super.run();
+
     // Create input packet
     Resource.INPUT_PACKET.create(this, element -> {
       element.position = INITIAL_INPUT_POSITION;

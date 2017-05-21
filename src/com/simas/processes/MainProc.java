@@ -18,6 +18,8 @@ public class MainProc extends Process {
 
   @Override
   public void run() {
+    super.run();
+
     // Fetch program in memory resource
     final ProgramElement element = Resource.PROGRAM_IN_MEMORY.request(this);
 

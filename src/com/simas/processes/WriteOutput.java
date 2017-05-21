@@ -21,6 +21,8 @@ public class WriteOutput extends Process {
 
   @Override
   public void run() {
+    super.run();
+
     // Wait for output packet resource
     final IOPacket packet = Resource.OUTPUT_PACKET.request(this);
 

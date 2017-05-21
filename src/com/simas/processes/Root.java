@@ -20,6 +20,8 @@ public class Root extends Process {
 
   @Override
   public void run() {
+    // Don't call super.run()! Root process doesn't need the CPU resource
+
     // Create system resource elements
     Resource.CPU.create(this);
     Resource.INTERNAL_MEMORY.create(this);

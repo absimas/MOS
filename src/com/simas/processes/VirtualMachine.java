@@ -37,6 +37,8 @@ public abstract class VirtualMachine extends Process {
 
   @Override
   public void run() {
+    super.run();
+
     // Reset TI
     RealMachine.resetTI();
 

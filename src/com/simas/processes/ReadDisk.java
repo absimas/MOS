@@ -22,6 +22,8 @@ public class ReadDisk extends Process {
 
   @Override
   public void run() {
+    super.run();
+
     // Wait for disk read resource
     final DiskPacket packet = Resource.DISK_READ_PACKET.request(this);
 

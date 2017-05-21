@@ -3,6 +3,7 @@ package com.simas.processes;
 import com.simas.real_machine.Comparison;
 import com.simas.real_machine.RealMachine;
 import com.simas.resources.Element;
+import com.simas.resources.Resource;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 import java.util.ArrayList;
@@ -120,6 +121,12 @@ public abstract class Process implements Runnable {
     RealMachine.TMP = savedTMP;
     RealMachine.IC = savedIC;
     RealMachine.C = savedC;
+  }
+
+  @Override
+  public void run() {
+    // Everyone needs the CPU
+    Resource.CPU.request(this);
   }
 
   /**

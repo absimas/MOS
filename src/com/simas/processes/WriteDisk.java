@@ -21,6 +21,8 @@ public class WriteDisk extends Process {
 
   @Override
   public void run() {
+    super.run();
+
     // Wait for disk write resource
     final DiskPacket packet = Resource.DISK_WRITE_PACKET.request(this);
 
