@@ -1,9 +1,11 @@
 package com.simas.processes;
 
+import com.simas.Log;
+import com.simas.real_machine.Channel2;
+import com.simas.real_machine.Memory;
 import com.simas.resources.Element;
 import com.simas.resources.IOPacket;
 import com.simas.resources.Resource;
-import com.simas.resources.StringElement;
 import com.sun.istack.internal.Nullable;
 
 /**
@@ -22,10 +24,15 @@ public class WriteOutput extends Process {
     // Wait for output packet resource
     final IOPacket packet = Resource.OUTPUT_PACKET.request(this);
 
-    // Wait for 2nd channel resource // ToDo element type?
-    final StringElement channel2 = Resource.CHANNEL_2.request(this);
+    // Wait for 2nd channel resource
+    final Element channel2 = Resource.CHANNEL_2.request(this);
 
-    // ToDo write to channel2
+    // Read from memory
+    final String output = Memory.getInstance().read(packet.position, packet.size);
+
+    // Write to 2nd channel
+    Channel2.write(output);
+    Log.v("%s wrote '%s'.", toString(), output);
 
     // Free 2nd channel
     channel2.free();
