@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class VirtualMachine3 extends VirtualMachine {
 
-  public static final String NAME = "VM3";
+  public static final String NAME = "3";
   /**
    * Command list. Program: fibonacci less than 5.
    */
