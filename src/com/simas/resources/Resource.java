@@ -1,6 +1,7 @@
 package com.simas.resources;
 
 import com.simas.Log;
+import com.simas.Scheduler;
 import com.simas.Utils;
 import com.simas.processes.Process;
 import com.sun.istack.internal.NotNull;
@@ -104,6 +105,8 @@ public class Resource<T extends Element> {
    */
   @NotNull
   public synchronized T request(Process requester, Predicate<? super T> predicate) {
+    Log.v("%s waits for %s.", requester, toString());
+
     // Fetch first element that matches the given predicate
     Optional<T> optional = elements.stream()
         .filter(predicate)
@@ -117,8 +120,12 @@ public class Resource<T extends Element> {
       // Add process to the waiters list
       waitingProcesses.add(requester);
 
-      // Block the process
-      requester.setState(Process.State.BLOCKED);
+      if (this != CPU) {
+        // Block the process
+        requester.setState(Process.State.BLOCKED);
+        // Schedule execution of another process
+        Scheduler.schedule();
+      }
 
       // Wait until a resource element is available
       while (!optional.isPresent()) {
@@ -139,8 +146,10 @@ public class Resource<T extends Element> {
       // An element is now available, remove process from waiters list
       waitingProcesses.remove(requester);
 
-      // Unblock the process
-      requester.setState(Process.State.READY);
+      if (this != CPU) {
+        // Unblock the process
+        requester.setState(Process.State.READY);
+      }
 
       // Now we need the CPU again
       requester.requestCPU();
