@@ -18,10 +18,9 @@ public class RealMachine {
    */
   public static int IC;
   /**
-   * Comparison bit flag.
-   * 0 - EQUAL, 1 - LESS, 2 - MORE.
+   * Comparison flag.
    */
-  public static int C;
+  public static Comparison C = Comparison.EQUAL;
   /**
    * Timer interrupt value (max value: {@link #MAX_TI}.
    */

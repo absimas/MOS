@@ -1,5 +1,6 @@
 package com.simas.processes;
 
+import com.simas.real_machine.Comparison;
 import com.simas.real_machine.RealMachine;
 import com.simas.resources.Element;
 import com.sun.istack.internal.NotNull;
@@ -63,7 +64,7 @@ public abstract class Process implements Runnable {
   /**
    * Saved {@link com.simas.real_machine.RealMachine#C}.
    */
-  private int savedC;
+  private Comparison savedC;
   @NotNull
   private State state = State.READY;
 
