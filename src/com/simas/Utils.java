@@ -1,6 +1,7 @@
 package com.simas;
 
 import com.simas.resources.Resource;
+import com.sun.istack.internal.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -25,6 +26,13 @@ public class Utils {
     }
 
     return fields;
+  }
+
+  /**
+   * Check if a string is empty or null.
+   */
+  public static boolean isEmpty(@Nullable String string) {
+    return string == null || string.isEmpty();
   }
 
 }
