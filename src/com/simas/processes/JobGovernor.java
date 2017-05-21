@@ -95,7 +95,7 @@ public class JobGovernor extends Process {
     final int size = 10;
     switch (interrupt.type) {
       case SD:
-        Channel3.setPosition(position);
+        Channel3.getInstance().setPointer(position);
         break;
       case TI:
         // ToDo call scheduler
@@ -124,7 +124,7 @@ public class JobGovernor extends Process {
         // Create disk read packet
         Resource.DISK_READ_PACKET.create(this, element -> {
           element.internalPosition = position;
-          element.externalPosition = Channel3.getPosition();
+          element.externalPosition = Channel3.getInstance().getPointer();
         });
 
         // Wait for a message from ReadDisk
@@ -134,7 +134,7 @@ public class JobGovernor extends Process {
         // Create disk write packet
         Resource.DISK_WRITE_PACKET.create(this, element -> {
           element.internalPosition = position;
-          element.externalPosition = Channel3.getPosition();
+          element.externalPosition = Channel3.getInstance().getPointer();
         });
 
         // Wait for a message from WriteDisk

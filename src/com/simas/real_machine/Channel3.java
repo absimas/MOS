@@ -3,16 +3,23 @@ package com.simas.real_machine;
 /**
  * Disk for I/O.
  */
-public class Channel3 {
+public class Channel3 extends Storage<Channel3> {
 
-  private static int position;
+  private static final int SIZE = 10000;
+  private static final Channel3 INSTANCE = new Channel3();
 
-  public static int getPosition() {
-    return position;
+  /**
+   * Private c-tor to prevent other instances than {@link #INSTANCE}.
+   */
+  private Channel3() {}
+
+  @Override
+  protected int getSize() {
+    return SIZE;
   }
 
-  public static void setPosition(int position) {
-    Channel3.position = position;
+  public static Channel3 getInstance() {
+    return INSTANCE;
   }
 
 }
