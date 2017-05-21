@@ -1,5 +1,6 @@
 package com.simas.processes;
 
+import com.simas.real_machine.RealMachine;
 import com.simas.resources.Element;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
@@ -51,6 +52,18 @@ public abstract class Process implements Runnable {
   private final int priority;
   private final Thread thread;
 
+  /**
+   * Saved {@link com.simas.real_machine.RealMachine#TMP}.
+   */
+  private String savedTMP;
+  /**
+   * Saved {@link com.simas.real_machine.RealMachine#IC}.
+   */
+  private int savedIC;
+  /**
+   * Saved {@link com.simas.real_machine.RealMachine#C}.
+   */
+  private int savedC;
   @NotNull
   private State state = State.READY;
 
@@ -88,6 +101,24 @@ public abstract class Process implements Runnable {
 
     // Start process thread
     thread.start();
+  }
+
+  /**
+   * Save registers.
+   */
+  public void save() {
+    savedTMP = RealMachine.TMP;
+    savedIC = RealMachine.IC;
+    savedC = RealMachine.C;
+  }
+
+  /**
+   * Restore registers.
+   */
+  public void restore() {
+    RealMachine.TMP = savedTMP;
+    RealMachine.IC = savedIC;
+    RealMachine.C = savedC;
   }
 
   /**
