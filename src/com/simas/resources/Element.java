@@ -9,15 +9,15 @@ import java.lang.reflect.InvocationTargetException;
  * @see Message
  * @see StringElement
  */
-public class Element<T extends Element, R extends Resource<T>> {
+public class Element<T extends Element> {
 
-  public final R resource;
+  public final Resource<T> resource;
   public final Process creator;
 
   /**
    * Required constructor.
    */
-  Element(R resource, Process creator) {
+  Element(Resource<T> resource, Process creator) {
     this.resource = resource;
     this.creator = creator;
   }
@@ -66,7 +66,7 @@ public class Element<T extends Element, R extends Resource<T>> {
 
   public static <T extends Element> T instantiate(Class<T> type, Resource<T> resource, Process creator) {
     try {
-      return type.getConstructor(Resource.class, Process.class).newInstance(resource, creator);
+      return type.getConstructor(resource.getClass(), Process.class).newInstance(resource, creator);
     } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
       Log.e("Resource element %s couldn't be instantiated! Is constructor (Resource, Process) missing?", type);
       e.printStackTrace();

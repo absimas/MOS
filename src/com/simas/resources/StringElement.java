@@ -5,7 +5,7 @@ import com.simas.processes.Process;
 /**
  * Simple string wrapping element.
  */
-public class StringElement extends Element<StringElement, Resource<StringElement>> {
+public class StringElement extends Element<StringElement> {
 
   public String string;
 

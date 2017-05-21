@@ -5,7 +5,7 @@ import com.simas.processes.Process;
 /**
  * I/O packet
  */
-public class IOPacket extends Element<IOPacket, Resource<IOPacket>> {
+public class IOPacket extends Element<IOPacket> {
 
   /**
    * Source/Destination position in internal memory.

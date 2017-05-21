@@ -5,7 +5,7 @@ import com.simas.processes.Process;
 /**
  * Message element with a specific process that will act as a destination.
  */
-public class Message<T extends Message> extends Element<T, Resource<T>> {
+public class Message<T extends Message> extends Element<T> {
 
   public Process destination;
   public String message;

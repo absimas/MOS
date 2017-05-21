@@ -7,7 +7,7 @@ import com.simas.processes.Process;
  * Writing: internal -> external
  * Reading: external -> internal
  */
-public class DiskPacket extends Element<DiskPacket, Resource<DiskPacket>> {
+public class DiskPacket extends Element<DiskPacket> {
 
   /**
    * External memory source/destination position.
