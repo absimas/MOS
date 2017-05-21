@@ -9,11 +9,11 @@ import com.sun.istack.internal.Nullable;
 /**
  * Process that write to screen.
  */
-public class WriteInput extends Process {
+public class WriteOutput extends Process {
 
   static final int PRIORITY = 10;
 
-  WriteInput(Process parent, @Nullable Element... resources) {
+  WriteOutput(Process parent, @Nullable Element... resources) {
     super(parent, PRIORITY, resources);
   }
 

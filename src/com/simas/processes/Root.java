@@ -1,6 +1,5 @@
 package com.simas.processes;
 
-import com.simas.resources.Element;
 import com.simas.resources.Resource;
 
 /**
@@ -27,7 +26,7 @@ public class Root extends Process {
     final ReadDisk readDisk = new ReadDisk(this);
     final WriteDisk writeDisk = new WriteDisk(this);
     final ReadInput readInput = new ReadInput(this);
-    final WriteInput writeInput = new WriteInput(this);
+    final WriteOutput writeOutput = new WriteOutput(this);
 
     // Create system resource elements
     Resource.INTERNAL_MEMORY.create(this);
@@ -39,7 +38,7 @@ public class Root extends Process {
     Resource.MOS_END.request(this);
 
     // Destroy system processes
-    writeInput.destroy();
+    writeOutput.destroy();
     readInput.destroy();
     writeDisk.destroy();
     readDisk.destroy();
