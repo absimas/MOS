@@ -2,6 +2,7 @@ package com.simas.resources;
 
 import com.simas.Utils;
 import com.simas.processes.Process;
+import com.simas.real_machine.Command;
 import com.sun.istack.internal.NotNull;
 
 /**
@@ -16,7 +17,7 @@ public class Interrupt extends Message<Interrupt> {
   @NotNull
   public Type type;
   @NotNull
-  public String failingCommand;
+  public Command failingCommand;
 
   /**
    * Required constructor.
@@ -27,7 +28,7 @@ public class Interrupt extends Message<Interrupt> {
 
   @Override
   public String toString() {
-    return String.format("Interrupt %s from %s", type, creator);
+    return String.format("Interrupt %s when executing %s in %s", type, failingCommand, creator);
   }
 
   @Override
@@ -35,8 +36,8 @@ public class Interrupt extends Message<Interrupt> {
     super.validate();
     if (type == null) {
       throw new IllegalStateException("Interrupt message must have a type!");
-    } else if (Utils.isEmpty(failingCommand)) {
-      throw new IllegalStateException(String.format("Interrupt message's failing command is empty: '%s'!", failingCommand));
+    } else if (failingCommand == null) {
+      throw new IllegalStateException("Interrupt message's failing command isn't set!");
     }
   }
 

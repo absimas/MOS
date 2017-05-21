@@ -91,7 +91,7 @@ public class JobGovernor extends Process {
     }
 
     // Handle I/O interrupts
-    final int position = Integer.valueOf(interrupt.failingCommand.substring(2));
+    final int position = interrupt.failingCommand.getArgument();
     final int size = 10;
     switch (interrupt.type) {
       case SD:
