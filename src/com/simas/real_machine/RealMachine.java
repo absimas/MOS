@@ -36,4 +36,12 @@ public class RealMachine {
     throw new TIException();
   }
 
+  /**
+   * Resets TI.
+   * @see #TI
+   */
+  public static void resetTI() {
+    TI = 0;
+  }
+
 }
