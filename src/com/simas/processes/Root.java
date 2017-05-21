@@ -21,6 +21,7 @@ public class Root extends Process {
   @Override
   public void run() {
     // Create system resource elements
+    Resource.CPU.create(this);
     Resource.INTERNAL_MEMORY.create(this);
     Resource.CHANNEL_1.create(this);
     Resource.CHANNEL_2.create(this);

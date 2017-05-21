@@ -29,7 +29,7 @@ public class Resource<T extends Element> {
   public static final Resource<DiskPacket> DISK_WRITE_PACKET = new Resource<>(DiskPacket.class);
   public static final Resource<Interrupt> INTERRUPT = new Resource<>(Interrupt.class);
   public static final Resource<Element> INTERNAL_MEMORY = new Resource<>(Element.class);
-  public static final Resource<StringElement> CPU = new Resource<>(StringElement.class);
+  public static final Resource<Element> CPU = new Resource<>(Element.class);
   public static final Resource<Element> NON_EXISTENT = new Resource<>(Element.class);
   public static final Resource<Element> NO_TASK = new Resource<>(Element.class);
   public static final Resource<Message> MESSAGE = new Resource<>(Message.class);
@@ -109,13 +109,16 @@ public class Resource<T extends Element> {
         .filter(predicate)
         .findFirst();
 
-    // In case resource is unavailable, switch requester's state and wait for it
+    // In case resource is unavailable requester is blocked
     if (!optional.isPresent()) {
-      // Block the process
-      requester.setState(Process.State.BLOCKED);
+      // Free all CPU resource elements (although will be only 1)
+      CPU.elements.forEach(Element::free);
 
       // Add process to the waiters list
       waitingProcesses.add(requester);
+
+      // Block the process
+      requester.setState(Process.State.BLOCKED);
 
       // Wait until a resource element is available
       while (!optional.isPresent()) {
@@ -138,6 +141,9 @@ public class Resource<T extends Element> {
 
       // Unblock the process
       requester.setState(Process.State.READY);
+
+      // We only need the CPU now
+      CPU.request(requester);
     }
 
     return optional.get();
