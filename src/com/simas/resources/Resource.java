@@ -86,7 +86,7 @@ public class Resource<T extends Element> {
     elements.add(element);
 
     // Notify resource about the newly available element
-    notify();
+    notifyAll();
   }
 
   /**
