@@ -36,21 +36,15 @@ public class VirtualMachine3 extends VirtualMachine {
       "HALT "
   );
 
-  private static final int INTERNAL_MEMORY_POSITION = 30;
+  private static final int INTERNAL_MEMORY_POSITION = 300;
 
   VirtualMachine3(Process parent, @Nullable Element... resources) {
     super(parent, INTERNAL_MEMORY_POSITION, resources);
   }
 
   @Override
-  protected void execute() throws TIException {
-    while (true) {
-      final String command = PROGRAM.get(RealMachine.IC++);
-      // ToDo execute command
-
-      // Increment TI
-      RealMachine.incrementTI();
-    }
+  protected List<String> getCommands() {
+    return PROGRAM;
   }
 
 }
