@@ -1,6 +1,7 @@
 package com.simas.processes;
 
 import com.simas.resources.Element;
+import com.simas.resources.Message;
 import com.simas.resources.Resource;
 import com.sun.istack.internal.Nullable;
 
@@ -33,32 +34,12 @@ public class CLI extends Process {
     });
 
     // Wait for ReadInput response
-    Resource.MESSAGE.request(this, message -> message.destination == CLI.this);
+    Message request = Resource.MESSAGE.request(this, message -> message.destination == CLI.this);
 
-    // ToDo Process input
-    int input;
     final String program;
 
-    switch (input) {
-      case 0:
-        // Create Program in memory resource
-        Resource.PROGRAM_IN_MEMORY.create(this, element -> {
-          // Non zero duration
-          element.duration = program.length();
-          element.program = program;
-        });
-
-        // Loop CLI
-        run();
-        break;
-      case 1:
-        // Wait for No task resource
-        Resource.NO_TASK.request(this);
-
-        // Loop CLI
-        run();
-        break;
-      case 2:
+    switch (request.message) {
+      case "-":
         // Create MOS end resource
         Resource.MOS_END.create(this);
 
@@ -66,10 +47,37 @@ public class CLI extends Process {
         Resource.NON_EXISTENT.request(this);
 
         throw new IllegalStateException("CLI shouldn't reach this part!");
+      case "0":
+        // Wait for No task resource
+        Resource.NO_TASK.request(this);
+
+        // Loop CLI
+        run();
+        break;
+      case VirtualMachine1.NAME:
+        createProgramInMemory(VirtualMachine1.NAME);
+        break;
+      case VirtualMachine2.NAME:
+        createProgramInMemory(VirtualMachine2.NAME);
+        break;
+      case VirtualMachine3.NAME:
+        createProgramInMemory(VirtualMachine3.NAME);
         break;
       default:
-        throw new IllegalStateException(String.format("Unexpected input read: %d", input));
+        throw new IllegalStateException(String.format("Unexpected input read: '%s'", request.message));
     }
+  }
+
+  private void createProgramInMemory(String vmName) {
+    // Create Program in memory resource
+    Resource.PROGRAM_IN_MEMORY.create(this, element -> {
+      // Non zero duration
+      element.duration = vmName.length();
+      element.program = vmName;
+    });
+
+    // Loop CLI
+    run();
   }
 
 }
