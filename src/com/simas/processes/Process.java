@@ -1,9 +1,9 @@
 package com.simas.processes;
 
+import com.simas.Scheduler;
 import com.simas.real_machine.Comparison;
 import com.simas.real_machine.RealMachine;
 import com.simas.resources.Element;
-import com.simas.resources.Message;
 import com.simas.resources.Resource;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
@@ -162,9 +162,11 @@ public abstract class Process implements Runnable {
     // Remove from global process list
     PROCESSES.remove(this);
 
-    // ToDo running process destroyed => change its state?
     if (state == State.RUNNING) {
-      // ToDo call scheduler
+      // When a running process is destroyed, change its state to BLOCKED_STOPPED
+      state = State.BLOCKED_STOPPED;
+      // And call the scheduler
+      Scheduler.schedule();
     }
   }
 
