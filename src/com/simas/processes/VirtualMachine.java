@@ -1,6 +1,7 @@
 package com.simas.processes;
 
 import com.simas.Log;
+import com.simas.Scheduler;
 import com.simas.Utils;
 import com.simas.exceptions.TIException;
 import com.simas.real_machine.Command;
@@ -65,7 +66,7 @@ public abstract class VirtualMachine extends Process {
       interruptParent(Interrupt.Type.PROGRAM_INTERRUPT, command);
     }
 
-    // ToDo call scheduler
+    Scheduler.schedule();
   }
 
   /**
