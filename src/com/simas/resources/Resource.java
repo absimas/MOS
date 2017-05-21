@@ -111,8 +111,8 @@ public class Resource<T extends Element> {
 
     // In case resource is unavailable requester is blocked
     if (!optional.isPresent()) {
-      // Free all CPU resource elements (although will be only 1)
-      CPU.elements.forEach(Element::free);
+      // Process looses CPU
+      requester.dropCPU();
 
       // Add process to the waiters list
       waitingProcesses.add(requester);
@@ -142,8 +142,8 @@ public class Resource<T extends Element> {
       // Unblock the process
       requester.setState(Process.State.READY);
 
-      // We only need the CPU now
-      CPU.request(requester);
+      // Now we need the CPU again
+      requester.requestCPU();
     }
 
     return optional.get();
