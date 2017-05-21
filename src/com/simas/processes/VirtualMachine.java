@@ -1,5 +1,6 @@
 package com.simas.processes;
 
+import com.simas.exceptions.TIException;
 import com.simas.real_machine.Memory;
 import com.simas.resources.Element;
 import com.simas.resources.Interrupt;
@@ -36,21 +37,32 @@ public abstract class VirtualMachine extends Process {
     */
 
     // Execute user program
-    execute(); // ToDo how to execute step-by-step?
-
-    // Send interrupt message to the parent (JobGovernor) process
-    Resource.INTERRUPT.create(this, element -> {
-      element.destination = parent;
-      // ToDo determine interrupt type
-      element.type = Interrupt.Type.HALT;
-    });
+    try {
+      execute();
+    } catch (TIException ignored) {
+      interruptParent(Interrupt.Type.TI);
+    } catch (Exception e) {
+      // ToDo rethrow to parent
+      interruptParent(Interrupt.Type.HALT);
+    }
 
     // ToDo call scheduler
   }
 
   /**
+   * Send interrupt message to the parent (JobGovernor) process.
+   * @param type interruption type
+   */
+  protected void interruptParent(Interrupt.Type type) {
+    Resource.INTERRUPT.create(this, element -> {
+      element.destination = parent;
+      element.type = type;
+    });
+  }
+
+  /**
    * Executes program specific to this VM.
    */
-  protected abstract void execute();
+  protected abstract void execute() throws TIException;
 
 }

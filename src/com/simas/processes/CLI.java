@@ -55,25 +55,24 @@ public class CLI extends Process {
         run();
         break;
       case VirtualMachine1.NAME:
-        createProgramInMemory(VirtualMachine1.NAME);
+        createProgramInMemory(VirtualMachine1.NAME, VirtualMachine1.PROGRAM.size());
         break;
       case VirtualMachine2.NAME:
-        createProgramInMemory(VirtualMachine2.NAME);
+        createProgramInMemory(VirtualMachine2.NAME, VirtualMachine2.PROGRAM.size());
         break;
       case VirtualMachine3.NAME:
-        createProgramInMemory(VirtualMachine3.NAME);
+        createProgramInMemory(VirtualMachine3.NAME, VirtualMachine3.PROGRAM.size());
         break;
       default:
         throw new IllegalStateException(String.format("Unexpected input read: '%s'", request.message));
     }
   }
 
-  private void createProgramInMemory(String vmName) {
+  private void createProgramInMemory(String name, int duration) {
     // Create Program in memory resource
     Resource.PROGRAM_IN_MEMORY.create(this, element -> {
-      // Non zero duration
-      element.duration = vmName.length();
-      element.program = vmName;
+      element.program = name;
+      element.duration = duration;
     });
 
     // Loop CLI

@@ -1,5 +1,7 @@
 package com.simas.real_machine;
 
+import com.simas.exceptions.TIException;
+
 /**
  * Created by Simas on 2017 May 21.
  */
@@ -23,6 +25,15 @@ public class RealMachine {
   /**
    * Timer interrupt value (max value: {@link #MAX_TI}.
    */
-  public static int TI;
+  private static int TI;
+
+  /**
+   * Increments TI.
+   * @throws TIException when TI reaches {@link #MAX_TI}
+   */
+  public static void incrementTI() throws TIException {
+    if (++TI < MAX_TI) return;
+    throw new TIException();
+  }
 
 }
