@@ -24,21 +24,26 @@ public class MainProc extends Process {
     final ProgramElement element = Resource.PROGRAM_IN_MEMORY.request(this);
 
     // Check program duration
-    if (element.duration == 0) {
-      // Destroy creator of the element
-      element.creator.destroy();
-    } else {
+    if (element.duration > 0) {
       // Create JobGovernor // This will perform the work on the processes worker thread
       new JobGovernor(this, element);
+
+      // Repeat
+      run();
+      return;
     }
 
+    // Destroy creator of the element
+    element.creator.destroy();
+
+    // If there are no more children ask CLI what to do next
     if (children.size() == 0) {
-      // When MainProc has no more children send NO_TASK resource received by Root process
+      // When MainProc has no more children send NO_TASK resource received by CLI process
       Resource.NO_TASK.create(this);
-    } else {
-      // Otherwise repeat MainProc
-      run();
     }
+
+    // Repeat
+    run();
   }
 
 }
