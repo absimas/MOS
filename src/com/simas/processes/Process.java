@@ -140,15 +140,21 @@ public abstract class Process implements Runnable {
       child.destroy();
     }
 
-    // Destroy created resource elements
-    for (Element element : createdResources) {
-      element.destroy();
+    // Destroy created resource elements // Use iterator because destroy may access the list
+    Iterator<Element> iterator = createdResources.iterator();
+    while (iterator.hasNext()) {
+      iterator.next().destroy();
     }
+    createdResources.clear();
 
-    // Free available resource elements, except the ones we have created because they've just been destroyed
-    availableResources.stream()
-        .filter(element -> !createdResources.contains(element)) // Skip elements we have created
-        .forEach(Element::free);                                // Free all other elements
+    // Free other available resource elements
+    // The created resources will already be removed from this list
+    // Use iterator because free may access the list
+    iterator = availableResources.iterator();
+    while (iterator.hasNext()) {
+      iterator.next().free();
+    }
+    availableResources.clear();
 
     // Remove from parent's child list
     parent.children.remove(this);
