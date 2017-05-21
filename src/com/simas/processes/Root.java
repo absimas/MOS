@@ -20,6 +20,12 @@ public class Root extends Process {
 
   @Override
   public void run() {
+    // Create system resource elements
+    Resource.INTERNAL_MEMORY.create(this);
+    Resource.CHANNEL_1.create(this);
+    Resource.CHANNEL_2.create(this);
+    Resource.CHANNEL_3.create(this);
+
     // Create system processes
     final CLI cli = new CLI(this);
     final MainProc mainProc = new MainProc(this);
@@ -27,12 +33,6 @@ public class Root extends Process {
     final WriteDisk writeDisk = new WriteDisk(this);
     final ReadInput readInput = new ReadInput(this);
     final WriteOutput writeOutput = new WriteOutput(this);
-
-    // Create system resource elements
-    Resource.INTERNAL_MEMORY.create(this);
-    Resource.CHANNEL_1.create(this);
-    Resource.CHANNEL_2.create(this);
-    Resource.CHANNEL_3.create(this);
 
     // Wait for MOS_END resource
     Resource.MOS_END.request(this);
