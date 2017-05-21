@@ -40,16 +40,6 @@ public abstract class VirtualMachine extends Process {
     // Reset TI
     RealMachine.resetTI();
 
-    /* ToDo do we need PTR?
-    // Wait for internal memory resource
-    final Element memory = Resource.INTERNAL_MEMORY.request(this);
-
-    // Fill PTR
-
-    // Free internal memory resource
-    memory.free();
-    */
-
     // Execute user program
     Command command = null;
     try {
