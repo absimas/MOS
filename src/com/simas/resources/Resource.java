@@ -145,8 +145,12 @@ public class Resource<T extends Element> {
 
       Log.v("%s got %s.", requester, toString());
 
-      // Remove element from list before waiting for the CPU
-      elements.remove(optional.get());
+      // Remove element from list
+      final T element = optional.get();
+      elements.remove(element);
+
+      // Add element to the requester's list of available resources
+      requester.availableResources.add(element);
 
       // An element is now available, remove process from waiters list
       waitingProcesses.remove(requester);
@@ -158,14 +162,20 @@ public class Resource<T extends Element> {
         // Now we need the CPU again
         requester.requestCPU();
       }
+
+      return element;
+    } else {
+      // Remove element from list
+      final T element = optional.get();
+      elements.remove(element);
+
+      // Add element to the requester's list of available resources
+      requester.availableResources.add(element);
+
+      Log.v("%s got %s of %s.", requester, element, toString());
+
+      return element;
     }
-
-    // Remove element from list (in case we received it immediately)
-    elements.remove(optional.get());
-
-    Log.v("%s got %s.", requester, toString());
-
-    return optional.get();
   }
 
   @Override
