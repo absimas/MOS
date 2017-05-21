@@ -38,8 +38,6 @@ public class CLI extends Process {
     // Wait for ReadInput response
     Message request = Resource.MESSAGE.request(this, message -> message.destination == CLI.this);
 
-    final String program;
-
     switch (request.message) {
       case "-":
         // Create MOS end resource

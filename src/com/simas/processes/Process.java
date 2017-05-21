@@ -238,7 +238,7 @@ public abstract class Process implements Runnable {
 
   @Override
   public String toString() {
-    return String.format("Process {%s, %s}", super.toString(), getState());
+    return String.format("%s (%s)", getClass().getSimpleName(), getState());
   }
 
 }

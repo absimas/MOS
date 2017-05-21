@@ -21,6 +21,7 @@ public class Scheduler {
   public static Process currentProcess;
 
   public static synchronized void schedule() {
+    Log.v("Taking CPU from %s", currentProcess);
     // Current process loses CPU
     currentProcess.dropCPU();
 
@@ -54,6 +55,7 @@ public class Scheduler {
     currentProcess.setState(Process.State.RUNNING);
 
     // Newly selected process gets the CPU
+    Log.v("Giving CPU to %s", currentProcess);
     Resource.CPU.create(Root.instance, element -> element.destination = currentProcess);
   }
 
