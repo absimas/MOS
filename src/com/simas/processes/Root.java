@@ -7,6 +7,11 @@ import com.simas.resources.Resource;
  */
 public class Root extends Process {
 
+  /**
+   * Singleton instance.
+   */
+  public static Root instance;
+
   static final int PRIORITY = 100;
 
   public Root() {
@@ -16,17 +21,18 @@ public class Root extends Process {
     setState(State.RUNNING);
 
     // Prevent multiple roots
-    if (PROCESSES.stream().anyMatch(process -> process instanceof Root)) {
+    if (instance != null) {
       throw new IllegalStateException("Root process was already created!");
     }
+    instance = this;
   }
 
   @Override
   public void run() {
-    // Don't call super.run()! Root process doesn't need the CPU resource
+    // Don't call super.run()! Root process doesn't request the CPU resource - it creates it.
 
     // Create system resource elements
-    Resource.CPU.create(this);
+    Resource.CPU.create(this, element -> element.destination = this); // ToDo prevent multiples
     Resource.INTERNAL_MEMORY.create(this);
     Resource.CHANNEL_1.create(this);
     Resource.CHANNEL_2.create(this);
