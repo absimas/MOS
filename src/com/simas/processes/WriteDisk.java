@@ -1,5 +1,7 @@
 package com.simas.processes;
 
+import com.simas.real_machine.Channel3;
+import com.simas.real_machine.Memory;
 import com.simas.resources.DiskPacket;
 import com.simas.resources.Element;
 import com.simas.resources.Resource;
@@ -22,18 +24,26 @@ public class WriteDisk extends Process {
     // Wait for disk write resource
     final DiskPacket packet = Resource.DISK_WRITE_PACKET.request(this);
 
-    // Wait for 3rd channel resource // ToDo element type?
-    final StringElement channel3 = Resource.CHANNEL_3.request(this);
+    // Wait for 3rd channel resource
+    final Element resource = Resource.CHANNEL_3.request(this);
 
-    // ToDo write to channel3
+    // Read from memory
+    final String string = Memory.getInstance().read(packet.internalPosition, packet.size);
+
+    // Write to 3rd channel
+    final Channel3 channel3 = Channel3.getInstance();
+    final int pointer = packet.externalPosition / Channel3.POINTER_SHIFT;
+    channel3.setPointer(pointer);
+    final int position = packet.externalPosition - pointer;
+    channel3.write(position, string);
 
     // Free 3rd channel
-    channel3.free();
+    resource.free();
 
     // Send message to packet creator
     Resource.MESSAGE.create(this, element -> {
       element.destination = packet.creator;
-      element.message = "Writing done";
+      element.message = string;
     });
   }
 

@@ -20,7 +20,7 @@ public class Resource<T extends Element> {
 
   public static final Resource<ProgramElement> PROGRAM_IN_MEMORY = new Resource<>(ProgramElement.class);
   public static final Resource<Element> MOS_END = new Resource<>(Element.class);
-  public static final Resource<StringElement> CHANNEL_3 = new Resource<>(StringElement.class);
+  public static final Resource<Element> CHANNEL_3 = new Resource<>(Element.class);
   public static final Resource<Element> CHANNEL_2 = new Resource<>(Element.class);
   public static final Resource<Element> CHANNEL_1 = new Resource<>(Element.class);
   public static final Resource<IOPacket> INPUT_PACKET = new Resource<>(IOPacket.class);
