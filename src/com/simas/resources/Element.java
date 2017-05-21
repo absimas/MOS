@@ -4,6 +4,7 @@ import com.simas.Log;
 import com.simas.processes.Process;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.function.Consumer;
 
 /**
  * Resource element is a wrapper on different types of elements.
@@ -34,7 +35,8 @@ public class Element<T extends Element, R extends Resource<T>> {
     synchronized (resource) {
       resource.notify();
     }
-    // ToDo notify processes that have this resource as available?
+
+    removeFromAvailable();
   }
 
   /**
@@ -42,6 +44,14 @@ public class Element<T extends Element, R extends Resource<T>> {
    */
   public void destroy() {
     resource.elements.remove(this);
+    removeFromAvailable();
+  }
+
+  /**
+   * Removes this element from available resource lists ({@link Process#availableResources}) in all processes ({@link Process#PROCESSES}).
+   */
+  private void removeFromAvailable() {
+    Process.PROCESSES.forEach(process -> process.availableResources.remove(this));
   }
 
   @Override
