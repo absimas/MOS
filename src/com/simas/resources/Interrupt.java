@@ -22,7 +22,7 @@ public class Interrupt extends Message<Interrupt> {
   /**
    * Required constructor.
    */
-  Interrupt(Resource<Interrupt> resource, Process creator) {
+  public Interrupt(Resource<Interrupt> resource, Process creator) {
     super(resource, creator);
   }
 

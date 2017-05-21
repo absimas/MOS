@@ -25,7 +25,7 @@ public class DiskPacket extends Element<DiskPacket> {
   /**
    * Required constructor.
    */
-  DiskPacket(Resource<DiskPacket> resource, Process creator) {
+  public DiskPacket(Resource<DiskPacket> resource, Process creator) {
     super(resource, creator);
   }
 

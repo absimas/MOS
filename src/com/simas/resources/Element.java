@@ -17,7 +17,7 @@ public class Element<T extends Element> {
   /**
    * Required constructor.
    */
-  Element(Resource<T> resource, Process creator) {
+  public Element(Resource<T> resource, Process creator) {
     this.resource = resource;
     this.creator = creator;
   }

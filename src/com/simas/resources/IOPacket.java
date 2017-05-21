@@ -19,7 +19,7 @@ public class IOPacket extends Element<IOPacket> {
   /**
    * Required constructor.
    */
-  IOPacket(Resource<IOPacket> resource, Process creator) {
+  public IOPacket(Resource<IOPacket> resource, Process creator) {
     super(resource, creator);
   }
 

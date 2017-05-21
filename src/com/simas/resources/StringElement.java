@@ -12,7 +12,7 @@ public class StringElement extends Element<StringElement> {
   /**
    * Required constructor.
    */
-  StringElement(Resource<StringElement> resource, Process creator) {
+  public StringElement(Resource<StringElement> resource, Process creator) {
     super(resource, creator);
   }
 

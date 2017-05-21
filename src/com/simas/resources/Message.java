@@ -13,7 +13,7 @@ public class Message<T extends Message> extends Element<T> {
   /**
    * Required constructor.
    */
-  Message(Resource<T> resource, Process creator) {
+  public Message(Resource<T> resource, Process creator) {
     super(resource, creator);
   }
 

@@ -13,7 +13,7 @@ public class ProgramElement extends Element<ProgramElement> {
   /**
    * Required constructor.
    */
-  ProgramElement(Resource<ProgramElement> resource, Process creator) {
+  public ProgramElement(Resource<ProgramElement> resource, Process creator) {
     super(resource, creator);
   }
 
