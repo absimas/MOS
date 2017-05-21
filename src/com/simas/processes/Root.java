@@ -29,10 +29,9 @@ public class Root extends Process {
 
   @Override
   public void run() {
-    // Don't call super.run()! Root process doesn't request the CPU resource - it creates it.
+    super.run();
 
     // Create system resource elements
-    Resource.CPU.create(this, element -> element.destination = this); // ToDo prevent multiples
     Resource.INTERNAL_MEMORY.create(this);
     Resource.CHANNEL_1.create(this);
     Resource.CHANNEL_2.create(this);
