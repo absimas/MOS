@@ -12,6 +12,9 @@ public class Root extends Process {
   public Root() {
     super(null, PRIORITY);
 
+    // Initially running
+    setState(State.RUNNING);
+
     // Prevent multiple roots
     if (PROCESSES.stream().anyMatch(process -> process instanceof Root)) {
       throw new IllegalStateException("Root process was already created!");
