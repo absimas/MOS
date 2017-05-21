@@ -126,9 +126,9 @@ public abstract class Process implements Runnable {
   }
 
   @Override
-  public void  run() {
+  public void run() {
     // Everyone needs the CPU
-    Resource.CPU.request(this, message -> message.destination == this);
+    requestCPU();
   }
 
   /**
@@ -212,9 +212,13 @@ public abstract class Process implements Runnable {
 
   /**
    * Places a CPU request for this process.
+   * No request is made if this process already has the CPU (e.g. when process's run iterates recursively).
    * This call will block until CPU is given and {@link Resource#CPU} is notified.
    */
   public void requestCPU() {
+    for (Element availableResource : availableResources) {
+      if (availableResource.resource == Resource.CPU) return;
+    }
     Resource.CPU.request(this, message -> message.destination == this);
   }
 
