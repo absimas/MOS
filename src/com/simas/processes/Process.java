@@ -237,4 +237,16 @@ public abstract class Process implements Runnable {
     return String.format("%s (%s-%d)", getClass().getSimpleName(), getState(), priority);
   }
 
+  public String getId() {
+    return Integer.toHexString(hashCode());
+  }
+
+  public String getName() {
+    return getClass().getSimpleName();
+  }
+
+  public int getPriority() {
+    return priority;
+  }
+
 }
