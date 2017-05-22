@@ -22,7 +22,7 @@ public abstract class Process implements Runnable {
   public static final List<Process> PROCESSES = new ArrayList<>();
 
   public enum State {
-    READY, RUNNING, BLOCKED, READY_STOPPED, BLOCKED_STOPPED
+    RUNNING, READY, READY_STOPPED, BLOCKED, BLOCKED_STOPPED
   }
 
   /**
