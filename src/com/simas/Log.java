@@ -35,7 +35,7 @@ public class Log {
    * Error
    */
   public static void e(String string, Object... format) {
-    System.out.println(String.format(string, format));
+    System.err.println(String.format(string, format));
   }
 
 }
