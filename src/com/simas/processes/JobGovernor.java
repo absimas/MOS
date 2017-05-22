@@ -3,6 +3,7 @@ package com.simas.processes;
 import com.simas.Log;
 import com.simas.Scheduler;
 import com.simas.real_machine.Channel3;
+import com.simas.real_machine.RealMachine;
 import com.simas.resources.Element;
 import com.simas.resources.Interrupt;
 import com.simas.resources.Message;
@@ -97,7 +98,6 @@ public class JobGovernor extends Process {
 
     // Handle I/O interrupts
     final int position = interrupt.command.getArgument() + interrupt.vm.getMemoryPosition();
-    final int size = 10;
     switch (interrupt.type) {
       case SD:
         Channel3.getInstance().setPointer(position);
@@ -109,7 +109,7 @@ public class JobGovernor extends Process {
         // Create input packet
         Resource.INPUT_PACKET.create(this, element -> {
           element.position = position;
-          element.size = size;
+          element.size = RealMachine.WORD_SIZE;
         });
 
         // Wait for a message from ReadInput
@@ -119,7 +119,7 @@ public class JobGovernor extends Process {
         // Create output packet
         Resource.OUTPUT_PACKET.create(this, element -> {
           element.position = position;
-          element.size = size;
+          element.size = RealMachine.WORD_SIZE;
         });
 
         // Wait for a message from WriteOutput
