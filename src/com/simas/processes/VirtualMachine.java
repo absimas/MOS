@@ -51,12 +51,13 @@ public abstract class VirtualMachine extends Process {
     RealMachine.resetTI();
 
     // Execute user program
+    String commandString = null;
     Command command = null;
     try {
       while (true) {
         // Parse
-        final String string = getCommands().get(RealMachine.IC++);
-        command = Command.parse(string);
+        commandString = getCommands().get(RealMachine.IC++);
+        command = Command.parse(commandString);
 
         // Execute until an exception is thrown or execution requires elevated privileges
         if (!execute(command)) {
@@ -69,7 +70,7 @@ public abstract class VirtualMachine extends Process {
     } catch (TIException ignored) {
       interruptParent(Interrupt.Type.TI, command);
     } catch (IllegalArgumentException | IndexOutOfBoundsException | ArithmeticException e) {
-      Log.e("Invalid command encountered: %s. Exception caught: %s.", command, e);
+      Log.e("Invalid command! The last executed command was: %s. Exception caught: %s.", commandString, e);
       interruptParent(Interrupt.Type.PROGRAM_INTERRUPT, command);
     }
 
