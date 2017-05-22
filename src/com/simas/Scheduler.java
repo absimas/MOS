@@ -4,6 +4,8 @@ import com.simas.processes.Process;
 import com.simas.processes.Root;
 import com.simas.resources.Resource;
 import com.sun.istack.internal.NotNull;
+
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -20,7 +22,7 @@ public class Scheduler {
   public static Process currentProcess;
 
   public static synchronized void schedule() {
-    Log.v("Taking CPU from %s", currentProcess);
+    final Process oldProcess = currentProcess;
     // Current process loses CPU
     currentProcess.dropCPU();
 
@@ -40,6 +42,7 @@ public class Scheduler {
     // No ready processes
     if (!optional.isPresent()) {
       Log.e("Special situation! No ready processes available...");
+      Log.e("Process list: " + Arrays.toString(Process.PROCESSES.toArray()));
       System.exit(1);
       return;
     }
@@ -54,7 +57,7 @@ public class Scheduler {
     currentProcess.setState(Process.State.RUNNING);
 
     // Newly selected process gets the CPU
-    Log.v("Giving CPU to %s", currentProcess);
+    Log.v("CPU %s -> %s", oldProcess, currentProcess);
     Resource.CPU.create(Root.instance, element -> element.destination = currentProcess);
   }
 
