@@ -89,7 +89,8 @@ public abstract class VirtualMachine extends Process {
     Resource.INTERRUPT.create(this, element -> {
       element.destination = parent;
       element.type = type;
-      element.failingCommand = command;
+      element.command = command;
+      element.vm = this;
     });
   }
 
