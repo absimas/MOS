@@ -10,7 +10,7 @@ import com.sun.istack.internal.Nullable;
  */
 public class CLI extends Process {
 
-  static final int PRIORITY = 10;
+  static final int PRIORITY = 20;
 
   /**
    * Internal memory destination (position) to where the initial command will be read.

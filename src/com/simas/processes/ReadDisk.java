@@ -14,7 +14,7 @@ import com.sun.istack.internal.Nullable;
  */
 public class ReadDisk extends Process {
 
-  static final int PRIORITY = 10;
+  static final int PRIORITY = 20;
 
   ReadDisk(Process parent, @Nullable Element... resources) {
     super(parent, PRIORITY, resources);

@@ -13,7 +13,7 @@ import com.sun.istack.internal.Nullable;
  */
 public class WriteDisk extends Process {
 
-  static final int PRIORITY = 10;
+  static final int PRIORITY = 20;
 
   WriteDisk(Process parent, @Nullable Element... resources) {
     super(parent, PRIORITY, resources);

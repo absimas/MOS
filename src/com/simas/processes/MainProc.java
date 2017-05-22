@@ -10,7 +10,7 @@ import com.sun.istack.internal.Nullable;
  */
 public class MainProc extends Process {
 
-  static final int PRIORITY = 10;
+  static final int PRIORITY = 20;
 
   MainProc(Process parent, @Nullable Element... resources) {
     super(parent, PRIORITY, resources);

@@ -13,7 +13,7 @@ import com.sun.istack.internal.Nullable;
  */
 public class WriteOutput extends Process {
 
-  static final int PRIORITY = 10;
+  static final int PRIORITY = 20;
 
   WriteOutput(Process parent, @Nullable Element... resources) {
     super(parent, PRIORITY, resources);
