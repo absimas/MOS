@@ -30,16 +30,16 @@ public abstract class VirtualMachine extends Process {
   /**
    * {@link Memory} position of this VM (in words)
    */
-  private final int internalMemoryPosition;
+  private final int memoryPosition;
 
-  VirtualMachine(Process parent, int internalMemoryPosition, @Nullable Element... resources) {
+  VirtualMachine(Process parent, int memoryPosition, @Nullable Element... resources) {
     super(parent, PRIORITY, resources);
-    this.internalMemoryPosition = internalMemoryPosition;
+    this.memoryPosition = memoryPosition;
 
     // Write VM program to memory
     final Storage memory = Memory.getInstance();
     for (int i = 0; i < getCommands().size(); i++) {
-      memory.write(internalMemoryPosition + i, getCommands().get(i));
+      memory.write(memoryPosition + i, getCommands().get(i));
     }
   }
 
@@ -264,13 +264,21 @@ public abstract class VirtualMachine extends Process {
   }
 
   /**
+   * Get the initial memory position of this VM.
+   * @see #memoryPosition
+   */
+  final int getMemoryPosition() {
+    return memoryPosition;
+  }
+
+  /**
    * Read from memory.
    * @param poisition word index within a relative memory block
    * @return word that's been read
    * @throws IndexOutOfBoundsException when reading from an OOB memory position
    */
   protected final String read(int poisition) throws IndexOutOfBoundsException {
-    return Memory.getInstance().read(internalMemoryPosition + poisition, RealMachine.WORD_SIZE);
+    return Memory.getInstance().read(getMemoryPosition() + poisition, RealMachine.WORD_SIZE);
   }
 
 
@@ -285,7 +293,7 @@ public abstract class VirtualMachine extends Process {
     if (word.length() != RealMachine.WORD_SIZE) {
       throw new IllegalArgumentException("Trying to write an incomplete word!");
     }
-    Memory.getInstance().write(internalMemoryPosition + position, word);
+    Memory.getInstance().write(getMemoryPosition() + position, word);
   }
 
 }
