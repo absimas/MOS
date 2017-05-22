@@ -6,7 +6,6 @@ import com.simas.Utils;
 import com.simas.processes.Process;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.function.Predicate;
 public class Resource<T extends Element> {
 
   public static final Resource<ProgramElement> PROGRAM_IN_MEMORY = new Resource<>(ProgramElement.class);
-  public static final Resource<Element> MOS_END = new Resource<>(Element.class);
+  public static final Resource<ConsumedElement> MOS_END = new Resource<>(ConsumedElement.class);
   public static final Resource<Element> CHANNEL_3 = new Resource<>(Element.class);
   public static final Resource<Element> CHANNEL_2 = new Resource<>(Element.class);
   public static final Resource<Element> CHANNEL_1 = new Resource<>(Element.class);
@@ -172,7 +171,7 @@ public class Resource<T extends Element> {
       // Add element to the requester's list of available resources
       requester.availableResources.add(element);
 
-      Log.v("%s got %s of %s.", requester, element, toString());
+      Log.v("%s got %s.", requester, toString());
 
       return element;
     }
