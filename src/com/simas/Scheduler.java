@@ -4,7 +4,6 @@ import com.simas.processes.Process;
 import com.simas.processes.Root;
 import com.simas.resources.Resource;
 import com.sun.istack.internal.NotNull;
-import java.util.Comparator;
 import java.util.Optional;
 
 /**
@@ -35,7 +34,7 @@ public class Scheduler {
 
     final Optional<Process> optional = Process.PROCESSES.stream()
         .filter(process -> process.getState() == Process.State.READY)
-        .sorted(Comparator.comparingInt(o -> o.priority))
+        .sorted((o1, o2) -> o2.priority - o1.priority)
         .findFirst();
 
     // No ready processes
