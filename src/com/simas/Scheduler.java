@@ -4,7 +4,6 @@ import com.simas.processes.Process;
 import com.simas.processes.Root;
 import com.simas.resources.Resource;
 import com.sun.istack.internal.NotNull;
-
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -12,6 +11,8 @@ import java.util.Optional;
  * Created by Simas on 2017 May 21.
  */
 public class Scheduler {
+
+  private static Runnable listener;
 
   /**
    * Last executed process.
@@ -64,22 +65,40 @@ public class Scheduler {
 
     // ? -> Running
     currentProcess.setState(Process.State.RUNNING);
+    if (listener != null) listener.run();
+    sleep();
 
     // Newly selected process gets the CPU
     Log.v("CPU %s -> %s", oldProcess, currentProcess);
     Resource.CPU.create(Root.instance, element -> element.destination = currentProcess);
   }
 
+  /**
+   * Resumes the scheduler class.
+   */
   public static synchronized void resume() {
     Scheduler.class.notify();
   }
 
+  /**
+   * Sleeps the scheduler class.
+   */
   public static synchronized void sleep() {
     try {
       Scheduler.class.wait();
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Set listener that's called each time the Scheduler is about to go to sleep.
+   * @see #sleep()
+   * @see #resume()
+   * @param runnable runnable that will be run when the event occurs
+   */
+  public static void setListener(Runnable runnable) {
+    Scheduler.listener = runnable;
   }
 
 }
