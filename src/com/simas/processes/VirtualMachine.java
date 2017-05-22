@@ -8,6 +8,7 @@ import com.simas.real_machine.Command;
 import com.simas.real_machine.Comparison;
 import com.simas.real_machine.Memory;
 import com.simas.real_machine.RealMachine;
+import com.simas.real_machine.Storage;
 import com.simas.resources.Element;
 import com.simas.resources.Interrupt;
 import com.simas.resources.Resource;
@@ -27,13 +28,19 @@ public abstract class VirtualMachine extends Process {
   private static final int MEMORY_SIZE = 100 * RealMachine.WORD_SIZE;
 
   /**
-   * {@link Memory} position of this VM.
+   * {@link Memory} position of this VM (in words)
    */
   private final int internalMemoryPosition;
 
   VirtualMachine(Process parent, int internalMemoryPosition, @Nullable Element... resources) {
     super(parent, PRIORITY, resources);
     this.internalMemoryPosition = internalMemoryPosition;
+
+    // Write VM program to memory
+    final Storage memory = Memory.getInstance();
+    for (int i = 0; i < getCommands().size(); i++) {
+      memory.write(internalMemoryPosition + i, getCommands().get(i));
+    }
   }
 
   @Override
