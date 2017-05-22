@@ -61,7 +61,7 @@ public class Element<T extends Element> {
 
   @Override
   public String toString() {
-    return String.format("Basic element of %s created by %s.", resource, creator);
+    return String.format("Element by %s", creator);
   }
 
   public static <T extends Element> T instantiate(Class<T> type, Resource<T> resource, Process creator) {
