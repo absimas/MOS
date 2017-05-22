@@ -59,8 +59,6 @@ public class Root extends Process {
     mainProc.destroy();
     cli.destroy();
 
-    // Destroy resource elements // ToDo necessary?
-
     Log.e("Process list when leaving: " + Arrays.toString(Process.PROCESSES.toArray()));
 
     // We're done. Some processes may still be waiting for non-exis

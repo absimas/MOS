@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<BorderPane
+	xmlns="http://javafx.com/javafx/8.0.112"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.simas.ui.MainController"
+	stylesheets="@styles/styles.css"
+	maxHeight="-Infinity"
+	maxWidth="-Infinity"
+	prefHeight="365.0">
+	<left>
+		<TableView
+			fx:id="processTable"
+			styleClass="process-table"
+			prefWidth="450.0"
+			BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn
+					text="#">
+					<cellValueFactory>
+						<PropertyValueFactory property="id"/>
+					</cellValueFactory>
+				</TableColumn>
+
+				<TableColumn
+					prefWidth="140.0"
+					text="Name">
+					<cellValueFactory>
+						<PropertyValueFactory property="name"/>
+					</cellValueFactory>
+				</TableColumn>
+
+				<TableColumn
+					text="Priority"
+					prefWidth="100.0">
+					<cellValueFactory>
+						<PropertyValueFactory property="priority"/>
+					</cellValueFactory>
+				</TableColumn>
+
+				<TableColumn
+					prefWidth="130.0"
+					text="State">
+					<cellValueFactory>
+						<PropertyValueFactory property="state"/>
+					</cellValueFactory>
+				</TableColumn>
+			</columns>
+		</TableView>
+	</left>
+
+	<bottom>
+		<HBox
+			prefHeight="35.0"
+		  prefWidth="200.0"
+		  spacing="15"
+			alignment="CENTER_LEFT">
+			<padding>
+				<Insets
+					top="10"
+					right="10"
+					bottom="10"
+					left="10"/>
+			</padding>
+
+			<Button
+				styleClass="schedule"
+				minWidth="40"
+				minHeight="40"
+				maxWidth="40"
+				maxHeight="40"
+				onAction="#schedule">
+				<graphic>
+					<ImageView
+						fitHeight="25.0"
+						pickOnBounds="true"
+						preserveRatio="true">
+						<Image url="@arrow.png"/>
+					</ImageView>
+				</graphic>
+			</Button>
+
+			<TextField
+				fx:id="input"
+				styleClass="input-field"
+				promptText="INPUT"
+				prefWidth="100"/>
+
+			<TextField
+				fx:id="output"
+				styleClass="output-field"
+				editable="false"
+				promptText="OUTPUT"
+				prefWidth="100"/>
+		</HBox>
+	</bottom>
+
+	<right>
+		<ListView
+			managed="false"
+			fx:id="resourceList"
+			styleClass="resource-list"
+			prefWidth="350.0"
+			BorderPane.alignment="CENTER">
+			<!--Initially, the list contains 1 empty item to prevent drawing an empty (white) list-->
+			<items>
+				<FXCollections fx:factory="observableArrayList">
+					<String/>
+				</FXCollections>
+			</items>
+		</ListView>
+	</right>
+</BorderPane>

@@ -1,0 +1,52 @@
+.resource-list {
+  -fx-background-insets: 0 0 0 0;
+  -fx-selection-bar-non-focused: #0096c9;
+}
+
+.process-table {
+  -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+  -fx-background-insets: 0, 1, 2;
+  -fx-background-radius: 5, 4, 3;
+}
+
+.process-table .scroll-bar:horizontal .increment-arrow,
+.process-table .scroll-bar:horizontal .decrement-arrow,
+.process-table .scroll-bar:horizontal .increment-button,
+.process-table .scroll-bar:horizontal .decrement-button {
+  -fx-padding:0;
+}
+
+.process-table .table-cell {
+  -fx-background-color: inherit;
+}
+
+.process-table .vm-cell {
+  -fx-background-color: #d5e8d4;
+  -fx-background-insets: 0, 0, 0;
+}
+
+.process-table:focused .vm-cell:selected {
+  -fx-background-color: -fx-background, -fx-cell-focus-inner-border, -fx-background;
+  -fx-background-insets: 0, 1, 2;
+}
+
+.process-table .vm-cell:selected {
+  -fx-background-color: inherit;
+  -fx-background-insets: 0, 0, 0;
+}
+
+.schedule {
+  -fx-font-size: 30;
+  -fx-padding: 5;
+}
+
+.input-field {
+  -fx-margin: 0 0 0 15;
+}
+
+.output-field {
+  -fx-margin: 0 0 0 15;
+  -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+  -fx-background-insets: 0, 1, 2;
+  -fx-background-radius: 5, 4, 3;
+}
