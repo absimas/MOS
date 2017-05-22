@@ -11,4 +11,8 @@ public class Channel2 {
     Channel2.output = output;
   }
 
+  public static String getOutput() {
+    return output;
+  }
+
 }
