@@ -7,6 +7,8 @@ import com.sun.istack.internal.NotNull;
  */
 public class Channel1 {
 
+  private static Runnable listener;
+
   @NotNull
   private static String buffer = "";
 
@@ -31,12 +33,27 @@ public class Channel1 {
     final String string = buffer.substring(0, size);
     buffer = buffer.substring(size, buffer.length());
 
+    if (listener != null) listener.run();
+
     return string;
   }
 
-  public synchronized static void fillBuffer(@NotNull String string) {
-    buffer += string;
+  public synchronized static void setBuffer(@NotNull String string) {
+    buffer = string;
     Channel1.class.notify();
+  }
+
+  public static String getBuffer() {
+    return buffer;
+  }
+
+  /**
+   * Set listener that's called each time {@link #read(int)} is called and a part of {@link #buffer} is consumed.
+   * @see #read
+   * @param runnable runnable that will be run when the event occurs
+   */
+  public static void setListener(Runnable runnable) {
+    Channel1.listener = runnable;
   }
 
 }
