@@ -87,13 +87,11 @@ public class JobGovernor extends Process {
         // Destroy VM
         virtualMachine.destroy();
 
-        // Free program in memory resource
-        programResource.free();
+        // Create program in memory resource with 0 duration to get this governor destroyed
+        Resource.PROGRAM_IN_MEMORY.create(this);
 
-        // Wait for a non-existent resource
-        Resource.NON_EXISTENT.request(this);
-
-        throw new IllegalStateException("JobGovernor shouldn't reach this part!");
+        Scheduler.schedule();
+        return;
     }
 
     // Handle I/O interrupts
