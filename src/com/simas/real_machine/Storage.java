@@ -7,7 +7,7 @@ import java.util.Arrays;
  */
 public abstract class Storage<T extends Storage> {
 
-  private final char[] STORAGE = new char[getSize()];
+  public final char[] STORAGE = new char[getSize()];
   public static final int POINTER_SHIFT = 100;
 
   /**
@@ -23,32 +23,35 @@ public abstract class Storage<T extends Storage> {
   /**
    * Reads a value from memory.
    *
-   * @param position starting memory position
+   * @param position absolute position
    * @param size     value length
    * @return value that's been read
    */
   public String read(int position, int size) throws IndexOutOfBoundsException {
-    if (pointer * POINTER_SHIFT + position + size >= getSize()) {
+    if (getPointerPosition() + getWordPosition(position) + size >= getSize()) {
       throw new IndexOutOfBoundsException("Reading outside the bounds of storage!");
     }
 
-    final char[] read = Arrays.copyOfRange(STORAGE, pointer * POINTER_SHIFT + position, pointer * POINTER_SHIFT + position + size);
+    final char[] read = Arrays.copyOfRange(STORAGE, getPointerPosition() + getWordPosition(position), getPointerPosition() + getWordPosition(position) + size);
     return new String(read);
   }
 
   /**
    * Write value to memory starting at position.
-   *
-   * @param position starting memory position
+   * @param position absolute position
    * @param value    value to be written
    */
   public void write(int position, String value) throws IndexOutOfBoundsException {
-    if (pointer * POINTER_SHIFT + position + value.length() >= getSize()) {
+    if (getPointerPosition() + getWordPosition(position) + value.length() >= getSize()) {
       throw new IndexOutOfBoundsException("Writing beyond the bounds of storage!");
     }
 
     final char[] chars = value.toCharArray();
-    System.arraycopy(chars, 0, STORAGE, pointer * POINTER_SHIFT + position, chars.length);
+    System.arraycopy(chars, 0, STORAGE, getPointerPosition() + getWordPosition(position), chars.length);
+  }
+
+  private static int getWordPosition(int position) {
+    return position * RealMachine.WORD_SIZE;
   }
 
   /**
@@ -61,6 +64,10 @@ public abstract class Storage<T extends Storage> {
 
   public int getPointer() {
     return pointer;
+  }
+
+  private int getPointerPosition() {
+    return pointer * POINTER_SHIFT;
   }
 
 }
