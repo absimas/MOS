@@ -32,7 +32,7 @@ public class VirtualMachine3 extends VirtualMachine {
       "00000",
       "00000",
       "00001",
-      "00005",
+      "00003",
       "HALT "
   );
 
