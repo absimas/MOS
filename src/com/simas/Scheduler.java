@@ -55,6 +55,10 @@ public class Scheduler {
     // Select the found process
     currentProcess = optional.get();
 
+    // Move the found process to the end of the process list
+    Process.PROCESSES.remove(currentProcess);
+    Process.PROCESSES.add(currentProcess);
+
     // Restore process registers
     currentProcess.restore();
 
