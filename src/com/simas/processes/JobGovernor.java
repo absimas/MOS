@@ -68,6 +68,8 @@ public class JobGovernor extends Process {
    * @param virtualMachine virtual machine that was created
    */
   private void afterCreation(VirtualMachine virtualMachine) {
+    requestCPU();
+
     // Wait for an interrupt message
     final Interrupt interrupt = Resource.INTERRUPT.request(this, i -> {
       // From child VM to this JobGovernor
