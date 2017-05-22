@@ -1,6 +1,9 @@
 package com.simas.processes;
 
+import com.simas.Log;
 import com.simas.resources.Resource;
+
+import java.util.Arrays;
 
 /**
  * The first created process.
@@ -57,6 +60,11 @@ public class Root extends Process {
     cli.destroy();
 
     // Destroy resource elements // ToDo necessary?
+
+    Log.e("Process list when leaving: " + Arrays.toString(Process.PROCESSES.toArray()));
+
+    // We're done. Some processes may still be waiting for non-exis
+    System.exit(0);
   }
 
 }
