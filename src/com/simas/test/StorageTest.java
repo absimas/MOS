@@ -26,7 +26,7 @@ public class StorageTest {
 
   @Test(expected=IndexOutOfBoundsException.class)
   public void writingOOB() {
-    Memory.getInstance().write(995, "some_string");
+    Memory.getInstance().write(999, "00000");
   }
 
   @Test(expected=IndexOutOfBoundsException.class)
@@ -36,7 +36,7 @@ public class StorageTest {
 
   @Test(expected=IndexOutOfBoundsException.class)
   public void readingOOB() {
-    Memory.getInstance().read(995, 6);
+    Memory.getInstance().read(999, 5);
   }
 
   @Test(expected=IndexOutOfBoundsException.class)
