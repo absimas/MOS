@@ -22,6 +22,11 @@ public class Scheduler {
   public static Process currentProcess;
 
   public static synchronized void schedule() {
+    try {
+      Thread.sleep(50);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     final Process oldProcess = currentProcess;
     // Current process loses CPU
     currentProcess.dropCPU();
