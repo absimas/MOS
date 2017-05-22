@@ -70,6 +70,7 @@ public class Resource<T extends Element> {
    * Before it is added, the given {@link Element.Modifier} will be called to modify the created element.
    */
   public synchronized void create(Process creator, @Nullable Element.Modifier<T> modifier) {
+    if (this != Resource.CPU) Log.d("%s creates %s.", creator, toString());
     // Instantiate
     final T element = Element.instantiate(elementType, this, creator);
 
@@ -129,7 +130,6 @@ public class Resource<T extends Element> {
 
       // Wait until a resource element is available
       while (!optional.isPresent()) {
-        Log.v("%s asked for an element of %s but it wasn't found.", requester, toString());
         // Wait for a resource notification
         try {
           wait();
